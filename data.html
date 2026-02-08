@@ -93,28 +93,5 @@
 
 </button>
 
-<div id="table-container"></div>
-
-<script>
-async function loadCSV(file) {
-  const response = await fetch(file);
-  const text = await response.text();
-  const rows = text.trim().split('\n').map(r => r.split(','));
-
-  let html = '<table><thead><tr>';
-  rows[0].forEach(col => html += `<th>${col}</th>`);
-  html += '</tr></thead><tbody>';
-
-  rows.slice(1).forEach(row => {
-    html += '<tr>';
-    row.forEach(cell => html += `<td>${cell}</td>`);
-    html += '</tr>';
-  });
-
-  html += '</tbody></table>';
-  document.getElementById('table-container').innerHTML = html;
-}
-</script>
-
 </body>
 </html>
