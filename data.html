@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV Loader</title>
+  <style>
+
+    header {
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: #91d6df;
+      padding: 30px 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 32px;
+      letter-spacing: 0.4em;
+    }
+
+    header p {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 32px;
+      margin-top: 32px;
+
+      letter-spacing: 0em;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:#111827;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #91d6df;
+      color: black;
+      margin-bottom: 30px;
+    }
+
+    button:hover {
+      background: #2a7543;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>splicer</h1>
+    <img src="/Users/nrk/Desktop/Test Software/Local_Business_Density/logov1.png" width="600" height="75" alt="operate smarter">
+
+    <p>Samples are contact info, rough business age, and zip code population of 6,000+ businesses across the USA.</p>
+    <p>Too busy to chat. Send an email describing your "dream" dataset and I can send you a curated sample.</p>
+    <p>Email: nnrotello@gmail.com</p>
+
+  </header>
+<button onclick="loadCSV('medical_spa_usa.csv')">
+  Sourcing for Medical Spa
+</button>
+
+<button onclick="loadCSV('locksmith_usa.csv')">
+  Sourcing for Locksmiths
+
+<button onclick="loadCSV('pool_service_usa.csv')">
+  Sourcing for Pool Services
+</button>
+
+<button onclick="loadCSV('mental_health_services_usa.csv')">
+  Sourcing for Mental Health Services
+
+</button>
+
+<div id="table-container"></div>
+
+<script>
+async function loadCSV(file) {
+  const response = await fetch(file);
+  const text = await response.text();
+  const rows = text.trim().split('\n').map(r => r.split(','));
+
+  let html = '<table><thead><tr>';
+  rows[0].forEach(col => html += `<th>${col}</th>`);
+  html += '</tr></thead><tbody>';
+
+  rows.slice(1).forEach(row => {
+    html += '<tr>';
+    row.forEach(cell => html += `<td>${cell}</td>`);
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('table-container').innerHTML = html;
+}
+</script>
+
+</body>
+</html>
